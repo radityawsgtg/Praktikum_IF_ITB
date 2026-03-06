@@ -1,0 +1,11 @@
+# Blokir semua file executable
+*.exe
+
+# Blokir folder hasil compile PyInstaller
+dist/
+build/
+*.spec
+
+# Blokir cache Python
+__pycache__/
+*.pyc
