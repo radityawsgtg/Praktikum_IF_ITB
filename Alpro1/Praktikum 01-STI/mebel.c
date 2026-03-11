@@ -18,7 +18,7 @@ int main() {
                 printf("M");
             } 
             else {
-                printf("-"); //Sepasi saya ganti dash agar pebih mudah visualisasinya, tinggal ubah ke sepasi saja
+                printf("-"); //Sepasi gw ganti dash agar pebih mudah visualisasinya, tinggal ubah ke sepasi saja
             }
         }
         printf("\n"); 
