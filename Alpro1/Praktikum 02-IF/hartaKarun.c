@@ -9,5 +9,6 @@ int main(){
         scanf("%d", &titik[i]);
     }
 
-    
+    int gradien[9];
+    for (int i = 0; i < 9; i++)
 }
