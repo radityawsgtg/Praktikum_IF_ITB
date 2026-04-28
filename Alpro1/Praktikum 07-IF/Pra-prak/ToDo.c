@@ -3,7 +3,7 @@
 
 
 void createList(ToDoList *T, int capacity){
-    T->tasksList = (Task *)malloc(T->tasksList, capacity * sizeof(Task));
+    T->tasksList = (Task *)malloc(capacity * sizeof(Task));
     T->capacity = capacity;
     T->nEff = 0;
 }
@@ -66,7 +66,7 @@ boolean isFull(ToDoList T){
 /* Mengirimkan true jika list T penuh, false jika tidak */
 
 void addNewTask(ToDoList *T, char *taskName){
-    if (!isFull)
+    if (!isFull(*T))
     {
         T->tasksList[T->nEff].name = (char *)malloc((strlen(taskName) + 1) * sizeof(char)); /*ini ga paham kenapa harus gini*/
         strcpy(T->tasksList[T->nEff].name, taskName);
@@ -79,25 +79,21 @@ void addNewTask(ToDoList *T, char *taskName){
 /* I.S. List T tidak penuh, taskName terdefinisi */
 /* F.S. Task baru dengan status belum selesai ditambahkan sebagai elemen terakhir T */
 
-void removeTask(ToDoList *T, int idx){
-    free(T->tasksList[idx].name); /*free memory yang mau di beabasin*/
-    if (!isEmpty)
-    {
-        for (int i = idx; i < T->nEff-1; i++)
-        {
-            T->tasksList[i] = T->tasksList[i+1];
+void removeTask(ToDoList *T, int idx) {
+    if (!isEmpty(*T)) {
+        free(T->tasksList[idx].name);
+        for (int i = idx; i < T->nEff - 1; i++) {
+            T->tasksList[i] = T->tasksList[i + 1];
         }
         T->nEff--;
-        
     }
-    
 }
 /* Proses: Menghapus task pada indeks idx, elemen setelahnya digeser ke kiri */
 /* I.S. List T tidak kosong, 0 <= idx <= T.nEff-1 */
 /* F.S. Task pada indeks idx terhapus, T.nEff berkurang satu */
 
 void markTaskAsCompleted(ToDoList *T, int idx){
-    if (!isEmpty)
+    if (!isEmpty(*T))
     {
         T->tasksList[idx].status = true;
     }
@@ -127,7 +123,7 @@ void expandList(ToDoList *T, int num){
 /* F.S. Ukuran capacity bertambah sebanyak num */
 
 void shrinkList(ToDoList *T, int num){
-    T->capacity += num;
+    T->capacity -= num;
     T->tasksList = (Task *)realloc(T->tasksList, T->capacity * sizeof(Task));
 }
 /* Proses: Mengurangi capacity T sebanyak num */
