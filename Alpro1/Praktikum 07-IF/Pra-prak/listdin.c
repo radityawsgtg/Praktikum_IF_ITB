@@ -252,20 +252,70 @@ void extremeValues(ListDin l, ElType *max, ElType *min){
 
 /* ********** OPERASI LAIN ********** */
 void copyList(ListDin lIn, ListDin *lOut){
+    CreateListDin(lOut, CAPACITY(lIn));
+    NEFF(*lOut) = NEFF(lIn);
+    for (int i = 0; i < NEFF(lIn); i++)
+    {
+        ELMT(*lOut,i)= ELMT(lIn,i);
+    }
     
 }
 /* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
 /* F.S. lOut berisi salinan dari lIn (identik, nEff dan capacity sama) */
 /* Proses : Menyalin isi lIn ke lOut */ 
-ElType sumList(ListDin l);
+ElType sumList(ListDin l){
+    ElType sum=0;
+    for (int i = 0; i < NEFF(l); i++)
+    {
+        sum = sum + ELMT(l,i);
+    }
+    return sum;
+}
 /* Menghasilkan hasil penjumlahan semua elemen l */
 /* Jika l kosong menghasilkan 0 */
-int countVal(ListDin l, ElType val);
+int countVal(ListDin l, ElType val){
+    ElType count = 0 ;
+    if (isEmpty(l))
+    {      
+         return 0; 
+    }
+    
+    for (int i = 0; i < NEFF(l); i++)
+    {
+        if (ELMT(l,i)= val)
+        {
+            count++;
+        }
+    }
+    return count;
+    
+}
 /* Menghasilkan berapa banyak kemunculan val di l */
 /* Jika l kosong menghasilkan 0 */
 
 /* ********** SORTING ********** */
-void sort(ListDin *l, boolean asc);
+void sort(ListDin *l, boolean asc) {
+    ElType temp; // Gelas kosong untuk menukar data
+    
+    for (int i = 0; i < NEFF(*l); i++) {
+        for (int j = i + 1; j < NEFF(*l); j++) {
+            
+            // Jika ASC (Membesar) dan elemen kiri lebih besar dari kanan -> TUKAR!
+            if (asc && ELMT(*l, i) > ELMT(*l, j)) {
+                temp = ELMT(*l, i);
+                ELMT(*l, i) = ELMT(*l, j);
+                ELMT(*l, j) = temp;
+            }
+            // Jika DESC (Mengecil) dan elemen kiri lebih kecil dari kanan -> TUKAR!
+            else if (!asc && ELMT(*l, i) < ELMT(*l, j)) {
+                temp = ELMT(*l, i);
+                ELMT(*l, i) = ELMT(*l, j);
+                ELMT(*l, j) = temp;
+            }
+            
+        }
+    } 
+}
 /* I.S. l boleh kosong */
 /* F.S. Jika asc = true, l terurut membesar */
 /*      Jika asc = false, l terurut mengecil */
@@ -274,12 +324,19 @@ void sort(ListDin *l, boolean asc);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListDin *l, ElType val);
+void insertLast(ListDin *l, ElType val){
+    NEFF(*l)++;
+    ELMT(*l,NEFF(*l))= val;
+}
 /* Proses: Menambahkan val sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListDin *l, ElType *val);
+void deleteLast(ListDin *l, ElType *val){
+    NEFF(*l)--;
+    ELMT(*l,NEFF(*l))='\0';
+    *val = ELMT(*l,NEFF(*l));
+}
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
@@ -287,17 +344,28 @@ void deleteLast(ListDin *l, ElType *val);
 /*      List l mungkin menjadi kosong */
 
 /* ********* MENGUBAH UKURAN ARRAY ********* */
-void expandList(ListDin *l, int num);
+void expandList(ListDin *l, int num){
+    CAPACITY(*l) += num;
+    BUFFER(*l) = (ElType *) realloc (BUFFER(*l), CAPACITY(*l) * sizeof(ElType));    
+}
 /* Proses : Menambahkan capacity l sebanyak num */
 /* I.S. List sudah terdefinisi */
 /* F.S. Ukuran list bertambah sebanyak num */
 
-void shrinkList(ListDin *l, int num);
+void shrinkList(ListDin *l, int num) {
+    CAPACITY(*l) -= num;
+    // Menggunakan realloc untuk memperkecil memori
+    BUFFER(*l) = (ElType *) realloc (BUFFER(*l), CAPACITY(*l) * sizeof(ElType));
+}
 /* Proses : Mengurangi capacity sebanyak num */
 /* I.S. List sudah terdefinisi, ukuran capacity > num, dan nEff < capacity - num. */
 /* F.S. Ukuran list berkurang sebanyak num. */
 
-void compressList(ListDin *l);
+void compressList(ListDin *l) {
+    CAPACITY(*l) = NEFF(*l);
+    // Memangkas kapasitas sisa agar pas dengan jumlah elemen efektif
+    BUFFER(*l) = (ElType *) realloc (BUFFER(*l), CAPACITY(*l) * sizeof(ElType));
+}
 /* Proses : Mengubah capacity sehingga nEff = capacity */
 /* I.S. List tidak kosong */
 /* F.S. Ukuran nEff = capacity */
