@@ -290,9 +290,7 @@ boolean isSparse(Matrix m){
             {
                 count++;
             }
-            
         }
-        
     } return count <= (totalelm * 0.05);
     
 }
@@ -313,9 +311,30 @@ float determinant(Matrix m){
 }
 /* Prekondisi: isSquare(m) */
 /* Menghitung nilai determinan m */
-Matrix transpose(Matrix m);
+Matrix transpose(Matrix m){
+    Matrix mout;
+    createMatrix(ROW_EFF(m),COL_EFF(m),&mout);
+    for (int i = 0; i < ROW_EFF(m); i++)
+    {
+        for (int j = 0; j < COL_EFF(m); j++)
+        {
+            ELMT(mout,i,j) = ELMT(m,j,i);
+        }
+        
+    }
+    return mout;
+    
+}
 /* I.S. m terdefinisi dan IsSquare(m) */
 /* F.S. menghasilkan salinan transpose dari m, yaitu setiap elemen m(i,j) ditukar nilainya dengan elemen m(j,i) */
-void pTranspose(Matrix *m);
+void pTranspose(Matrix *m){
+    Matrix temp;
+    copyMatrix(*m, &temp);
+    for (int i = 0; i < ROW_EFF(*m); i++) {
+        for (int j = 0; j < COL_EFF(*m); j++) {
+            ELMT(*m, i, j) = ELMT(temp, j, i);
+        }
+    }
+}
 /* I.S. m terdefinisi dan IsSquare(m) */
 /* F.S. m "di-transpose", yaitu setiap elemen m(i,j) ditukar nilainya dengan elemen m(j,i) */
