@@ -1,0 +1,153 @@
+| ?- menikah(X, adinda), pria(X).
+
+X = todoroki ? 
+
+| ?- anak(X, P), anak(P, G), anak(G, loid).
+
+G = adinda
+P = kawakaze
+X = umaru ? ;
+
+G = levi
+P = razi
+X = chopper ? ;
+
+?-anak(chopper, P), anak(P, GP), saudara(GP, S), pria(S).
+
+GP = levi
+P = razi
+S = karma ? ;
+
+GP = levi
+P = razi
+S = karma ? ;
+
+| ?- pria(X), sepupu(X, S), wanita(S).
+
+S = kawakaze
+X = razi ? ;
+
+S = kawakaze
+X = razi ? ;
+
+S = anya
+X = fathur ? ;
+
+S = anya
+X = fathur ? ;
+
+| ?- keturunan(X, faqih), saudara(X, S), \+ (saudara(X, S2), S2 \= S).
+
+S = ariana
+X = owen ? ;
+
+S = ariana
+X = owen ? ;
+
+S = owen
+X = ariana ? ;
+
+S = owen
+X = ariana ? ;
+
+S = fathur
+X = nezuko ? ;
+
+S = fathur
+X = nezuko ? ;
+
+S = nezuko
+X = fathur ? ;
+
+S = nezuko
+X = fathur ? ;
+
+| ?- pria(X), anak(P, X), wanita(P), saudara(X, S), pria(S).
+
+no
+
+| ?- menikah(X, Y), usia(X, UX), usia(Y, UY), Res is abs(UX - UY), Res > 10.
+
+Res = 12
+UX = 109
+UY = 97
+X = faqih
+Y = karina ? ;
+
+Res = 12
+UX = 97
+UY = 109
+X = karina
+Y = faqih ? ;
+
+Res = 18
+UX = 46
+UY = 64
+X = tsunade
+Y = owen ? ;
+
+Res = 18
+UX = 64
+UY = 46
+X = owen
+Y = tsunade ? ;
+
+| ?- anaksulung(X), saudara(X, _).
+
+X = karma ? ;
+
+X = karma ? ;
+
+X = karma ? ;
+
+X = karma ? ;
+
+X = karma ? ;
+
+X = karma ? ;
+
+X = karma ? ;
+
+X = karma ? ;
+
+X = owen ? ;
+
+X = owen ? ;
+
+X = owen ? ;
+
+X = owen ? ;
+
+X = nezuko ? ;
+
+X = nezuko ? ;
+
+X = nezuko ? ;
+
+X = nezuko ? ;
+
+| ?- usia(X, U), U > 50, menikah(X, Y), saudara(Y, _).
+
+U = 72
+X = todoroki
+Y = adinda ? ;
+
+U = 72
+X = todoroki
+Y = adinda ? ;
+
+U = 72
+X = todoroki
+Y = adinda ? ;
+
+U = 72
+X = todoroki
+Y = adinda ? ;
+
+U = 57
+X = zoro
+Y = ariana ? ;
+
+U = 57
+X = zoro
+Y = ariana ? ;
